@@ -36,6 +36,8 @@ public class CoordinatesVO implements Serializable {
 	@Getter @Setter
 	private String name;
 	@Getter @Setter
+	private String address;
+	@Getter @Setter
 	private List<LocationVO> locations;
 	@Getter @Setter
 	private List<List<LocationVO>> multiLocations;

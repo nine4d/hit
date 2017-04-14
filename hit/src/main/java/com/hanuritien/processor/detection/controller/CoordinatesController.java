@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
 import com.hanuritien.processor.detection.address.AddressChecker;
+import com.hanuritien.processor.detection.address.AddressService;
 import com.hanuritien.processor.detection.coordinates.CoordinatesService;
 import com.hanuritien.processor.detection.coordinates.CoordinatesVO;
 import com.hanuritien.web.utils.DataTables.DataTablesInput;
@@ -34,7 +35,7 @@ public class CoordinatesController {
 	CoordinatesService coordsvc;
 	
 	@Autowired
-	AddressChecker addchk;
+	AddressChecker addchk;	
 
 	@RequestMapping(value = "getDataTables", method = RequestMethod.POST)
 	public WebAsyncTask<DataTablesOutput<CoordinatesVO>> getDataTables()

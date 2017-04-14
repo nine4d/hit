@@ -32,9 +32,6 @@ public class AddressChecker {
 	@Resource(name = "coordinatesService")
 	CoordinatesService coordsvc;
 	
-	@Resource(name = "addressService")
-	AddressService addsvc;
-	
 	@PostConstruct
 	public void init() throws Exception {
 		tree = RTree.star().create();
@@ -43,12 +40,30 @@ public class AddressChecker {
 		for (CoordinatesVO tmp : coords) {
 			List<Rectangle> rec = GeomatrixUtils.getBounds(tmp);
 			for (Rectangle t : rec) {
-				CoordinatesVO newvo = new CoordinatesVO(tmp.getId(), tmp.getType(), tmp.getCode(), tmp.getName(), null, null);
+				CoordinatesVO newvo = new CoordinatesVO(
+						tmp.getId(), 
+						tmp.getType(), 
+						tmp.getCode(), 
+						tmp.getName(), 
+						tmp.getAddress(),
+						null, null);
 				tree = tree.add(newvo, t);
 			}
 		}
-		
-		tree.visualize(2000, 2000).save("e:/mytree.png");
+	}
+	
+	public void addCoordinatesVO(CoordinatesVO tmp) {
+		List<Rectangle> rec = GeomatrixUtils.getBounds(tmp);
+		for (Rectangle t : rec) {
+			CoordinatesVO newvo = new CoordinatesVO(
+					tmp.getId(), 
+					tmp.getType(), 
+					tmp.getCode(), 
+					tmp.getName(), 
+					tmp.getAddress(),
+					null, null);
+			tree = tree.add(newvo, t);
+		}
 	}
 	
 	public List<CoordinatesVO> searchCoordinatesVO(float x, float y) {
@@ -57,27 +72,9 @@ public class AddressChecker {
 		logger.info(Float.toString(x));
 		logger.info(Float.toString(y));
 		
-/*		tree.search(Geometries.point(x,y)).count();
-		
-		tree.search(Geometries.point(x,y)).filter(new Func1<Entry<CoordinatesVO, Geometry>, Boolean>() {
-
-			@Override
-			public Boolean call(Entry<CoordinatesVO, Geometry> t) {
-				Boolean ret = false; 
-				
-				logger.info(t.value().getName());
-				ret = true;
-				
-				return ret;
-			}
-		}).toBlocking().toString();*/
-		
 		List<Entry<CoordinatesVO, Geometry>> list = tree.search(Geometries.point(x,y)).toList().toBlocking().single();
 		for (Entry<CoordinatesVO, Geometry> tmp : list) {
-			Address add = addsvc.findByCode(tmp.value().getCode());
-			if (add != null) {
-				logger.info(add.getAddress());	
-			}
+			logger.info(tmp.value().getAddress());	
 			//logger.info(tmp.value().getCode() + " " + tmp.value().getName());
 		}
 		

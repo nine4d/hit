@@ -8,8 +8,12 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hanuritien.processor.detection.address.Address;
+import com.hanuritien.processor.detection.address.AddressChecker;
+import com.hanuritien.processor.detection.address.AddressService;
 import com.hanuritien.processor.detection.coordinates.CoordinatesService;
 import com.hanuritien.processor.detection.coordinates.CoordinatesVO;
 import com.hanuritien.web.utils.DataTables.DataTablesInput;
@@ -25,6 +29,11 @@ public class CoordinatesServiceImpl implements CoordinatesService {
 	@Resource(name="CoordinatesDAO")
 	CoordinatesDAO coorddao;
 	
+	@Resource(name = "addressService")
+	AddressService addsvc;
+	
+	@Autowired
+	AddressChecker addchk;
 
 	/* (non-Javadoc)
 	 * @see com.hanuritien.processor.detection.coordinates.CoordinatesService#getDatatables(com.hanuritien.web.utils.DataTables.DataTablesInput)
@@ -57,7 +66,15 @@ public class CoordinatesServiceImpl implements CoordinatesService {
 			if (tmp.getId() == null || tmp.getId().isEmpty()) {
 				tmp.setId(UUID.randomUUID().toString().replaceAll("-", ""));
 			}
+			if (tmp.getAddress() == null) {
+				Address t = addsvc.findByCode(tmp.getCode());
+				if (t != null) {
+					tmp.setAddress(t.getAddress());
+				}
+			}
+			
 			coorddao.save(tmp);
+			addchk.addCoordinatesVO(tmp);
 		}
 	}
 
