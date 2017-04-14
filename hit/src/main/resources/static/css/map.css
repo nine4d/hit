@@ -1,0 +1,11 @@
+#map {
+  height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dimmed {position:fixed; top:0; left:0; width:100%; height:100%; background:url(images/bg_dimmed.png); z-index:998}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Map</title>
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/map.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+	integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp2rjS-ZDqnWvLt81gFi46zLt80HBA4j0&callback=initMap"
+	async defer></script>
+<script type="text/javascript" src="js/dataTables/jquery.dataTables.js"></script>
+
+<script src="js/map.js"></script>
+</head>
+<body>
+	<div id="map"></div>
+	<div style="top: 20px; right: 0px; z-index: 999; position: absolute;">
+		<div id="menu" class="collapse">
+			<div class="btn-toolbar" role="toolbar" aria-label="...">
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" id="btnNew">New</button>
+					<button type="button" class="btn btn-default" id="btnSave">Save</button>
+					<button type="button" class="btn btn-default" id="btnDelete">Delete</button>
+				</div>
+
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" id="btnCancel">Cancel</button>
+				</div>
+
+				<div class="btn-group" role="group" data-toggle="buttons"
+					aria-label="...">
+					<label class="btn btn-primary"> <input type="radio"
+						name="options" id="option1" autocomplete="off">Circle
+					</label> <label class="btn btn-primary"> <input type="radio"
+						name="options" id="option2" autocomplete="off">Line
+					</label> <label class="btn btn-primary"> <input type="radio"
+						name="options" id="option3" autocomplete="off">Polygon
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="btn-toolbar" role="toolbar" aria-label="...">
+			<div class="btn-group" role="group" aria-label="..."
+				style="float: right;">
+				<button type="button" class="btn btn-default" id="btnMenu"
+					data-toggle="collapse" href="#menu">
+					<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+				</button>
+				<button type="button" class="btn btn-default" id="btnList"
+					data-toggle="collapse" href="#list">
+					<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div style="bottom: 20px; left: 0px; z-index: 999; width:100%; position: absolute;">
+		<div id="list" class="collapse">
+			<table id="example" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>code</th>
+						<th>name</th>
+						<th>type</th>
+						<th>coordinates</th>
+						<th>multicoordinates</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
