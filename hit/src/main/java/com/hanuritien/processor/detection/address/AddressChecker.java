@@ -40,14 +40,14 @@ public class AddressChecker {
 		for (CoordinatesVO tmp : coords) {
 			List<Rectangle> rec = GeomatrixUtils.getBounds(tmp);
 			for (Rectangle t : rec) {
-				CoordinatesVO newvo = new CoordinatesVO(
+/*				CoordinatesVO newvo = new CoordinatesVO(
 						tmp.getId(), 
 						tmp.getType(), 
 						tmp.getCode(), 
 						tmp.getName(), 
 						tmp.getAddress(),
-						null, null);
-				tree = tree.add(newvo, t);
+						null, null);*/
+				tree = tree.add(tmp, t);
 			}
 		}
 	}
@@ -76,6 +76,7 @@ public class AddressChecker {
 		for (Entry<CoordinatesVO, Geometry> tmp : list) {
 			logger.info(tmp.value().getAddress());	
 			//logger.info(tmp.value().getCode() + " " + tmp.value().getName());
+			//logger.info(tmp.value().getLocations().toString());	
 		}
 		
 		return ret;
