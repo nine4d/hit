@@ -7,12 +7,14 @@ import java.util.concurrent.Callable;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
+import com.hanuritien.processor.detection.address.AddressChecker;
 import com.hanuritien.processor.detection.coordinates.CoordinatesService;
 import com.hanuritien.processor.detection.coordinates.CoordinatesVO;
 import com.hanuritien.web.utils.DataTables.DataTablesInput;
@@ -30,6 +32,9 @@ public class CoordinatesController {
 
 	@Resource(name = "coordinatesService")
 	CoordinatesService coordsvc;
+	
+	@Autowired
+	AddressChecker addchk;
 
 	@RequestMapping(value = "getDataTables", method = RequestMethod.POST)
 	public WebAsyncTask<DataTablesOutput<CoordinatesVO>> getDataTables()
@@ -83,6 +88,17 @@ public class CoordinatesController {
 						return ret;
 					}
 				}), new ResultVO<CoordinatesVO>(input.getDraw(), -1, "timeout", null));
+	}
+	
+	@RequestMapping(value = "getAddress", method = RequestMethod.GET)
+	public ResultVO<String> getAddress(float x, float y) throws Exception {
+		ResultVO<String> ret = new ResultVO<>(0, 0, null, null);
+		
+		addchk.searchCoordinatesVO(x, y);
+		
+		ret.setData(null);
+		
+		return null;	
 	}
 
 }
