@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 public class AppConfig {
@@ -32,4 +34,15 @@ public class AppConfig {
 		registration.addUrlMappings("/console/*");
 		return registration;
 	}
+	
+    @Bean
+    public WebMvcConfigurerAdapter forwardToIndex() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addViewControllers(ViewControllerRegistry registry) {
+                // forward requests to /admin and /user to their index.html
+            	registry.addViewController("/").setViewName("forward:/index.html");
+            }
+        };
+    }	
 }

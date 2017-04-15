@@ -122,6 +122,12 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.esri.geometry</groupId>
+			<artifactId>esri-geometry-api</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

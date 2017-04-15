@@ -3,6 +3,8 @@
  */
 package com.hanuritien.processor.detection.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.annotation.Resource;
@@ -95,11 +97,14 @@ public class CoordinatesController {
 	public ResultVO<String> getAddress(float x, float y) throws Exception {
 		ResultVO<String> ret = new ResultVO<>(0, 0, null, null);
 		
-		addchk.searchCoordinatesVO(x, y);
+		List<String> address = new ArrayList<>();
+		List<CoordinatesVO> rtmp = addchk.searchCoordinatesVO(x, y);
+		for (CoordinatesVO t : rtmp) {
+			address.add(t.getAddress());
+		}
+		ret.setData(address);
 		
-		ret.setData(null);
-		
-		return null;	
+		return ret;	
 	}
 
 }

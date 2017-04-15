@@ -6,8 +6,25 @@ import java.util.List;
 import com.github.davidmoten.rtree.geometry.Geometries;
 import com.github.davidmoten.rtree.geometry.Rectangle;
 import com.hanuritien.processor.detection.controller.CoordinateType;
+import com.esri.core.geometry.Polygon;
 
 public class GeomatrixUtils {
+	public static Polygon getPolygon(List<LocationVO> arg) {
+		Polygon ret = new Polygon();
+		
+		boolean first = true;
+		for (LocationVO tmp : arg) {
+			if (!first) {
+				ret.lineTo(tmp.getLon().doubleValue(), tmp.getLat().doubleValue());
+			} else {
+				ret.startPath(tmp.getLon().doubleValue(), tmp.getLat().doubleValue());
+				first = false;
+			}
+		}
+		
+		return ret;
+	}
+	
 	public static List<Rectangle> getBounds(CoordinatesVO arg) {
 		List<Rectangle> ret = new ArrayList<>();
 		
